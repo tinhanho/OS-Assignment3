@@ -54,26 +54,14 @@ void *thread1(void *arg){
     tid1 = syscall(SYS_gettid);
 
     /*YOUR CODE HERE*/
-    for(int i=0; i<matrix_row_x/2; i++){
-        for(int j=0; j<matrix_col_y; j++){
-            for(int k=0; k<matrix_row_y; k++){
-                z[i][j] += x[i][k] * y[k][j];
-            }      
-        }
-    }
+
     /****************/ 
 }
 
 void *thread2(void *arg){
     tid2 = syscall(SYS_gettid);
     /*YOUR CODE HERE*/
-    for(int i=matrix_row_x/2; i<matrix_row_x; i++){
-        for(int j=0; j<matrix_col_y; j++){
-            for(int k=0; k<matrix_row_y; k++){
-                z[i][j] += x[i][k] * y[k][j];
-            }     
-        }
-    }
+
     /****************/    
 }
 
