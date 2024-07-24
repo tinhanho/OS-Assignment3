@@ -18,7 +18,6 @@ FILE *fptr3;
 int **x;
 int **y;
 int **z;
-pid_t tid1, tid2;
 
 // Put file data intp x array
 void data_processing(void){
@@ -47,15 +46,12 @@ void data_processing(void){
 }
 
 void *thread1(void *arg){
-    tid1 = syscall(SYS_gettid);
-
     /*YOUR CODE HERE*/
 
     /****************/    
 }
 
 void *thread2(void *arg){
-    tid2 = syscall(SYS_gettid);
     /*YOUR CODE HERE*/
 
     /****************/    

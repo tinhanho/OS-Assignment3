@@ -70,7 +70,6 @@ void *thread2(void *arg){
 }
 
 int main(){
-    pid_t pid = getpid();
     ssize_t bytesRead;
     char buffer[50];
     x = malloc(sizeof(int*)*matrix_row_x);

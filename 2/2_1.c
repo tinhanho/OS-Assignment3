@@ -46,7 +46,6 @@ void data_processing(void){
 }
 
 void *thread(void *arg){
-
     /*YOUR CODE HERE*/
 
     /****************/    

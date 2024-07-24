@@ -11,8 +11,7 @@ char buf[BUFSIZE];
 
 static ssize_t Mywrite(struct file *fileptr, const char __user *ubuf, size_t buffer_len, loff_t *offset){
     /* Do nothing */
-    *offset = buffer_len;
-    return buffer_len;
+	return 0;
 }
 
 
