@@ -9,7 +9,9 @@ pthread_mutex_t mutex;
 
 void *thread(void *arg) {
     /*YOUR CODE HERE*/
-    for(int i=0; i<10000; i++) a = a + 1;                   
+    for(int i=0; i<10000; i++){
+	a = a + 1;                   
+    }
     /****************/              
     return NULL;
 }
