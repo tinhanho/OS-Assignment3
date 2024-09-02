@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
@@ -5,13 +6,11 @@
 #include <string.h>
 
 volatile int a = 0;
-pthread_mutex_t mutex;
+pthread_spinlock_t lock;
 
 void *thread(void *arg) {
     /*YOUR CODE HERE*/
-    for(int i=0; i<10000; i++){
-	a = a + 1;                   
-    }
+    for(int i=0; i<10000; i++) a = a + 1;                   
     /****************/              
     return NULL;
 }
@@ -21,12 +20,12 @@ int main() {
     fptr = fopen("1.txt", "a");
     pthread_t t1, t2;
 
-    pthread_mutex_init(&mutex, 0);
+    pthread_spin_init(&lock, 0);
     pthread_create(&t1, NULL, thread, NULL);
     pthread_create(&t2, NULL, thread, NULL);
     pthread_join(t1, NULL);
     pthread_join(t2, NULL);
-    pthread_mutex_destroy(&mutex);
+    pthread_spin_destroy(&lock);
 
     fprintf(fptr, "%d ", a);
     fclose(fptr);

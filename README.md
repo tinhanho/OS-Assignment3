@@ -1,7 +1,7 @@
 # OS-Assignment2
 
 - 1 Lock
-  - 1_1 pthread mutex lock(10%)
+  - 1_1 pthread spin lock(10%)
   - 1_2 write a spinlock(20%)
  
 - 2 Multithread(pthread)
