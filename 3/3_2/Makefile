@@ -12,10 +12,17 @@ all:
 clean:
 	@rm -f *.o *.ko *.mod.* *.symvers *.order *.mod.cmd *.mod
 
-Prog:
+Prog_1thread:
+	@rm -f 2.txt
+	@echo "#define THREAD_NUMBER 1" > 3_2_Config.h
 	@$(CC) -o 2.out 2_2.c
 	@sudo ./2.out
-	@rm -f 2.txt 2.out
+
+Prog_2thread:
+	@rm -f 2.txt
+	@echo "#define THREAD_NUMBER 2" > 3_2_Config.h
+	@$(CC) -o 2.out 2_2.c
+	@sudo ./2.out
 
 load:
 	@sudo insmod $(TARGET_MODULE).ko

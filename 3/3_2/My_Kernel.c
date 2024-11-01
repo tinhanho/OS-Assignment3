@@ -7,7 +7,7 @@
 
 #define procfs_name "Mythread_info"
 #define BUFSIZE  1024
-char buf[BUFSIZE];
+char buf[BUFSIZE]; //kernel buffer
 
 static ssize_t Mywrite(struct file *fileptr, const char __user *ubuf, size_t buffer_len, loff_t *offset){
     /*Your code here*/

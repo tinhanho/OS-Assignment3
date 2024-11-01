@@ -6,12 +6,13 @@
 #include <sys/syscall.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include "3_2_Config.h"
 
 #define matrix_row_x 1234
 #define matrix_col_x 250
 
 #define matrix_row_y 250
-#define matrix_col_y 4
+#define matrix_col_y 1234
 
 pthread_mutex_t mutex;
 FILE *fptr1;
@@ -54,23 +55,26 @@ void *thread1(void *arg){
     tid1 = syscall(SYS_gettid);
 
     /*YOUR CODE HERE*/
-    // char data[8];
-    // sprintf(data, "%d", tid1);
+#if (THREAD_NUMBER == 1)
+
+#elif (THREAD_NUMBER == 2)
+
+#endif
+
 
     /****************/ 
 }
 
+#if (THREAD_NUMBER == 2)
 void *thread2(void *arg){
     tid2 = syscall(SYS_gettid);
     /*YOUR CODE HERE*/
-    // char data[8];
-    // sprintf(data, "%d", tid2);
 
     /****************/   
 }
+#endif
 
 int main(){
-    ssize_t bytesRead;
     char buffer[50];
     x = malloc(sizeof(int*)*matrix_row_x);
     for(int i=0; i<matrix_row_x; i++){
@@ -96,7 +100,9 @@ int main(){
 
     pthread_mutex_init(&mutex, 0);
     pthread_create(&t1, NULL, thread1, NULL);
+#if (THREAD_NUMBER==2)
     pthread_create(&t2, NULL, thread2, NULL);
+#endif
     pthread_join(t1, NULL);
     pthread_join(t2, NULL);
     // while (fgets(buffer, sizeof(buffer), fptr5) != NULL) {
