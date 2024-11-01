@@ -16,8 +16,7 @@ FILE *fptr2;
 FILE *fptr3;
 int **x;
 int **y;
-int **z1;
-int **z2;
+int **z;
 
 // Put file data intp x array
 void data_processing(void){
@@ -48,17 +47,28 @@ void data_processing(void){
 void *thread1(void *arg){
 
     /*YOUR CODE HERE*/
+    for(int i=0; i<matrix_row_x; i++){
+        for(int j=0; j<matrix_col_y; j++){
+            for(int k=0; k<matrix_row_y/2; k++){
 
-    /****************/    
-
+            }      
+        }
+    }
+    /****************/
     return NULL;
 }
 
 void *thread2(void *arg) {
+
     /*YOUR CODE HERE*/
+    for(int i=0; i<matrix_row_x; i++){
+        for(int j=0; j<matrix_col_y; j++){
+            for(int k=matrix_row_y/2; k<matrix_row_y; k++){
 
-    /****************/    
-
+            }     
+        }
+    } 
+    /****************/
     return NULL;
 }
 
@@ -71,14 +81,9 @@ int main() {
     for(int i=0; i<matrix_row_y; i++){
         y[i] = malloc(sizeof(int)*matrix_col_y);
     }
-    z1 = malloc(sizeof(int*)*matrix_row_x);
+    z = malloc(sizeof(int*)*matrix_row_x);
     for(int i=0; i<matrix_row_x; i++){
-        z1[i] = malloc(sizeof(int)*matrix_col_y);
-    }
-
-    z2 = malloc(sizeof(int*)*matrix_row_x);
-    for(int i=0; i<matrix_row_x; i++){
-        z2[i] = malloc(sizeof(int)*matrix_col_y);
+        z[i] = malloc(sizeof(int)*matrix_col_y);
     }
     fptr1 = fopen("m1.txt", "r");
     fptr2 = fopen("m2.txt", "r");
@@ -86,18 +91,18 @@ int main() {
     pthread_t t1, t2;
     data_processing();
     fprintf(fptr3, "%d %d\n", matrix_row_x, matrix_col_y);
+
     pthread_spin_init(&lock, 0);
     pthread_create(&t1, NULL, thread1, NULL);
     pthread_create(&t2, NULL, thread2, NULL);
     pthread_join(t1, NULL);
     pthread_join(t2, NULL);
     pthread_spin_destroy(&lock);
-    
+
     //Write output matrix into file.
     for(int i=0; i<matrix_row_x; i++){
         for(int j=0; j<matrix_col_y; j++){
-            z1[i][j] = z1[i][j] + z2[i][j];
-            fprintf(fptr3, "%d ", z1[i][j]);
+            fprintf(fptr3, "%d ", z[i][j]);
             if(j==matrix_col_y-1) fprintf(fptr3, "\n");   
         }
     }
