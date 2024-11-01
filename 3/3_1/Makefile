@@ -13,9 +13,9 @@ clean:
 	@rm -f *.o *.ko *.mod.* *.symvers *.order *.mod.cmd *.mod
 
 Prog:
-	@$(CC) -o 2.out 2_2.c
-	@sudo ./2.out
-	@rm -f 2.txt 2.out
+	@$(CC) -o 3_1.out 3_1.c
+	@sudo ./3_1.out
+	@rm -f 3_1.txt 3_1.out
 
 load:
 	@sudo insmod $(TARGET_MODULE).ko

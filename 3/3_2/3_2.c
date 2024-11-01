@@ -107,7 +107,7 @@ int main(){
     }
     fptr1 = fopen("m1.txt", "r");
     fptr2 = fopen("m2.txt", "r");
-    fptr3 = fopen("2.txt", "a");
+    fptr3 = fopen("3_2.txt", "a");
     fptr4 = fopen("/proc/Mythread_info", "r");
     fptr5 = fopen("/proc/Mythread_info", "r");
 
