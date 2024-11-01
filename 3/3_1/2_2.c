@@ -50,12 +50,26 @@ void data_processing(void){
 }
 
 void *thread1(void *arg){
+    for(int i=0; i<matrix_row_x/2; i++){
+        for(int j=0; j<matrix_col_y; j++){
+            for(int k=0; k<matrix_row_y; k++){
+                z[i][j] += x[i][k] * y[k][j];
+            }      
+        }
+    }
     /*YOUR CODE HERE*/
 
     /****************/ 
 }
 
 void *thread2(void *arg){
+    for(int i=matrix_row_x/2; i<matrix_row_x; i++){
+        for(int j=0; j<matrix_col_y; j++){
+            for(int k=0; k<matrix_row_y; k++){
+                z[i][j] += x[i][k] * y[k][j];
+            }     
+        }
+    }
     /*YOUR CODE HERE*/
 
     /****************/    
@@ -86,7 +100,6 @@ int main(){
     data_processing();
     fprintf(fptr3, "%d %d\n", matrix_row_x, matrix_col_y);
 
-    pthread_mutex_init(&mutex, 0);
     pthread_create(&t1, NULL, thread1, NULL);
     pthread_create(&t2, NULL, thread2, NULL);
     while (fgets(buffer, sizeof(buffer), fptr4) != NULL) {
@@ -94,7 +107,6 @@ int main(){
     }
     pthread_join(t1, NULL);
     pthread_join(t2, NULL);
-    pthread_mutex_destroy(&mutex);
     for(int i=0; i<matrix_row_x; i++){
         for(int j=0; j<matrix_col_y; j++){
             fprintf(fptr3, "%d ", z[i][j]);

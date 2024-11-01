@@ -14,7 +14,7 @@
 #define matrix_row_y 250
 #define matrix_col_y 1234
 
-pthread_mutex_t mutex;
+pthread_spinlock_t lock;
 FILE *fptr1;
 FILE *fptr2;
 FILE *fptr3;
@@ -53,14 +53,24 @@ void data_processing(void){
 
 void *thread1(void *arg){
     tid1 = syscall(SYS_gettid);
-
+    #if (THREAD_NUMBER == 1)
+    for(int i=0; i<matrix_row_x; i++){
+        for(int j=0; j<matrix_col_y; j++){
+            for(int k=0; k<matrix_row_y; k++){
+                z[i][j] += x[i][k] * y[k][j];
+            }      
+        }
+    }
+    #elif (THREAD_NUMBER == 2)
+    for(int i=0; i<matrix_row_x/2; i++){
+        for(int j=0; j<matrix_col_y; j++){
+            for(int k=0; k<matrix_row_y; k++){
+                z[i][j] += x[i][k] * y[k][j];
+            }      
+        }
+    }
+    #endif
     /*YOUR CODE HERE*/
-#if (THREAD_NUMBER == 1)
-
-#elif (THREAD_NUMBER == 2)
-
-#endif
-
 
     /****************/ 
 }
@@ -68,6 +78,13 @@ void *thread1(void *arg){
 #if (THREAD_NUMBER == 2)
 void *thread2(void *arg){
     tid2 = syscall(SYS_gettid);
+    for(int i=matrix_row_x/2; i<matrix_row_x; i++){
+        for(int j=0; j<matrix_col_y; j++){
+            for(int k=0; k<matrix_row_y; k++){
+                z[i][j] += x[i][k] * y[k][j];
+            }     
+        }
+    }
     /*YOUR CODE HERE*/
 
     /****************/   
@@ -98,7 +115,7 @@ int main(){
     data_processing();
     fprintf(fptr3, "%d %d\n", matrix_row_x, matrix_col_y);
 
-    pthread_mutex_init(&mutex, 0);
+    pthread_spin_init(&lock, 0);
     pthread_create(&t1, NULL, thread1, NULL);
 #if (THREAD_NUMBER==2)
     pthread_create(&t2, NULL, thread2, NULL);
@@ -108,7 +125,7 @@ int main(){
     // while (fgets(buffer, sizeof(buffer), fptr5) != NULL) {
     //     printf("%s", buffer);
     // }
-    pthread_mutex_destroy(&mutex);
+    pthread_spin_destroy(&lock);
     for(int i=0; i<matrix_row_x; i++){
         for(int j=0; j<matrix_col_y; j++){
             fprintf(fptr3, "%d ", z[i][j]);

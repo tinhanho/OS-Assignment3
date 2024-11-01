@@ -10,7 +10,7 @@
 #define matrix_row_y 250
 #define matrix_col_y 4
 
-pthread_mutex_t mutex;
+pthread_spinlock_t lock;
 FILE *fptr1;
 FILE *fptr2;
 FILE *fptr3;
@@ -86,12 +86,13 @@ int main() {
     pthread_t t1, t2;
     data_processing();
     fprintf(fptr3, "%d %d\n", matrix_row_x, matrix_col_y);
-
+    pthread_spin_init(&lock, 0);
     pthread_create(&t1, NULL, thread1, NULL);
     pthread_create(&t2, NULL, thread2, NULL);
     pthread_join(t1, NULL);
     pthread_join(t2, NULL);
-
+    pthread_spin_destroy(&lock);
+    
     //Write output matrix into file.
     for(int i=0; i<matrix_row_x; i++){
         for(int j=0; j<matrix_col_y; j++){

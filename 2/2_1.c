@@ -11,7 +11,6 @@
 #define matrix_row_y 250
 #define matrix_col_y 4
 
-pthread_mutex_t mutex;
 FILE *fptr1;
 FILE *fptr2;
 FILE *fptr3;
@@ -79,11 +78,9 @@ int main(){
     data_processing();
     fprintf(fptr3, "%d %d\n", matrix_row_x, matrix_col_y);
 
-    pthread_mutex_init(&mutex, 0);
     pthread_create(&t1, NULL, thread, NULL);
     pthread_join(t1, NULL);
 
-    pthread_mutex_destroy(&mutex);
 
     fclose(fptr1);
     fclose(fptr2);
